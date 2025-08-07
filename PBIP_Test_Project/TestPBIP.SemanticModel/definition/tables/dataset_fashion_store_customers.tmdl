@@ -1,0 +1,56 @@
+table dataset_fashion_store_customers
+	lineageTag: e041c68e-0310-4255-bc57-a65be6a76c63
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 19664f60-bb33-4d61-91a1-5337df2c1779
+		summarizeBy: sum
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: a3f6c4f3-6324-4efa-ba44-14ed9f146add
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column age_range
+		dataType: string
+		lineageTag: 6eb3c8aa-c5db-477b-b48d-3550d890e410
+		summarizeBy: none
+		sourceColumn: age_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column signup_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 51e737e5-5c51-4ed7-973e-9b7cbf4af908
+		summarizeBy: none
+		sourceColumn: signup_date
+
+		variation Variation
+			isDefault
+			relationship: f7efd42e-610e-4473-847f-6bc5fd6cc4d9
+			defaultHierarchy: LocalDateTable_24ece327-4d60-41ed-a0e8-631a848ad4ce.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dataset_fashion_store_customers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\danis\Downloads\archive\dataset_fashion_store_customers.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_id", Int64.Type}, {"country", type text}, {"age_range", type text}, {"signup_date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

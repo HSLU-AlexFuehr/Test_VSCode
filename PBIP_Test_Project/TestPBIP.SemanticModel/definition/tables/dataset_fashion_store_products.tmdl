@@ -1,0 +1,92 @@
+table dataset_fashion_store_products
+	lineageTag: eaf3c116-50cf-4379-b52e-05f6651dd494
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: e332bbee-d4a8-456e-bb57-982d53829faf
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 69237e35-3c04-44e6-91c9-6cab0ae2c61c
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: a03639d5-25c2-4ccc-9b78-d66b124b7fd5
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand
+		dataType: string
+		lineageTag: 8a5efe70-ea15-412b-b92b-ffc36cc7d6a1
+		summarizeBy: none
+		sourceColumn: brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column color
+		dataType: string
+		lineageTag: dd69e423-d569-4fcb-9192-5996348dd2fe
+		summarizeBy: none
+		sourceColumn: color
+
+		annotation SummarizationSetBy = Automatic
+
+	column size
+		dataType: string
+		lineageTag: 270ef225-4d16-43b4-8530-ecf3fc0b2506
+		summarizeBy: none
+		sourceColumn: size
+
+		annotation SummarizationSetBy = Automatic
+
+	column catalog_price
+		dataType: double
+		lineageTag: 058e12e2-1123-41d5-9fdb-13b32ff37687
+		summarizeBy: none
+		sourceColumn: catalog_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cost_price
+		dataType: double
+		lineageTag: d1a22434-ed8f-4e32-af08-522f8afe634c
+		summarizeBy: none
+		sourceColumn: cost_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gender
+		dataType: string
+		lineageTag: 49bb46e7-2c73-4928-afa4-83a8632cdfd2
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dataset_fashion_store_products = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\danis\Downloads\archive\dataset_fashion_store_products.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"product_id", Int64.Type}, {"product_name", type text}, {"category", type text}, {"brand", type text}, {"color", type text}, {"size", type text}, {"catalog_price", type number}, {"cost_price", type number}, {"gender", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

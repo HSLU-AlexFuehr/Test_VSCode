@@ -1,0 +1,14 @@
+relationship f7efd42e-610e-4473-847f-6bc5fd6cc4d9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dataset_fashion_store_customers.signup_date
+	toColumn: LocalDateTable_24ece327-4d60-41ed-a0e8-631a848ad4ce.Date
+
+relationship 57f04ccf-5c9e-4e80-b87b-54899a5a9e1d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dataset_fashion_store_salesitems.sale_date
+	toColumn: LocalDateTable_39c12911-f25b-456f-9a5a-cd42861ca195.Date
+
+relationship AutoDetected_3c148303-5ee9-4d45-90ff-033cdcfa6621
+	fromColumn: dataset_fashion_store_salesitems.product_id
+	toColumn: dataset_fashion_store_products.product_id
+

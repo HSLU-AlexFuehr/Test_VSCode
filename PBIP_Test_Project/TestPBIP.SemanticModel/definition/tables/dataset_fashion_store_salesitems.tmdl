@@ -1,0 +1,114 @@
+table dataset_fashion_store_salesitems
+	lineageTag: 635c43c8-61a7-45cf-ad8d-73b375ca5f5e
+
+	column item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 485e6822-8233-4cb0-875b-38e164f15e94
+		summarizeBy: sum
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f2eb58bf-c2b8-4538-87f1-4bd2b6642520
+		summarizeBy: sum
+		sourceColumn: sale_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cf819bc7-d68d-47f1-b450-d2028b789c7a
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 09580880-5bd9-4f2a-8633-ffd13279e220
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column original_price
+		dataType: double
+		lineageTag: aae02f5c-fde1-4d9c-b7ee-0382fe7c4bf8
+		summarizeBy: sum
+		sourceColumn: original_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_price
+		dataType: double
+		lineageTag: ccb6c0be-ee71-4b72-8e3f-5f8e64bcf042
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column item_total
+		dataType: double
+		lineageTag: f9f8ca2d-f17d-468c-bafb-7a42185c10e4
+		summarizeBy: sum
+		sourceColumn: item_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sale_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 06a59dd6-2571-49fe-a4e5-5134cc9b0aa4
+		summarizeBy: none
+		sourceColumn: sale_date
+
+		variation Variation
+			isDefault
+			relationship: 57f04ccf-5c9e-4e80-b87b-54899a5a9e1d
+			defaultHierarchy: LocalDateTable_39c12911-f25b-456f-9a5a-cd42861ca195.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column channel
+		dataType: string
+		lineageTag: 3d6943f1-39c9-493a-9da6-d3d37766544d
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel_campaigns
+		dataType: string
+		lineageTag: 7ec72799-b9db-460d-a58f-5cde02b8848d
+		summarizeBy: none
+		sourceColumn: channel_campaigns
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dataset_fashion_store_salesitems = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\danis\Downloads\archive\dataset_fashion_store_salesitems.csv"),[Delimiter=",", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"item_id", Int64.Type}, {"sale_id", Int64.Type}, {"product_id", Int64.Type}, {"quantity", Int64.Type}, {"original_price", type number}, {"unit_price", type number}, {"discount_applied", type number}, {"discount_percent", Percentage.Type}, {"discounted", Int64.Type}, {"item_total", type number}, {"sale_date", type date}, {"channel", type text}, {"channel_campaigns", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"discount_applied", "discount_percent", "discounted"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dataset_fashion_store_customers","dataset_fashion_store_products","dataset_fashion_store_channels","dataset_fashion_store_salesitems"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.145.1602.0 (25.07)+10647c9fa319b5e39936cdb21328038c371d1fe4
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dataset_fashion_store_customers
+ref table DateTableTemplate_e9674994-d847-495b-b3fe-599891b83d0f
+ref table LocalDateTable_24ece327-4d60-41ed-a0e8-631a848ad4ce
+ref table dataset_fashion_store_products
+ref table dataset_fashion_store_channels
+ref table dataset_fashion_store_salesitems
+ref table LocalDateTable_39c12911-f25b-456f-9a5a-cd42861ca195
+
+ref cultureInfo en-US
+
